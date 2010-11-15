@@ -26,7 +26,6 @@ else
     die "$1 (or ../$1) is not a directory"
 fi
 
-echo "diff $2 $DIR/$2 > /dev/null"
 diff $2 $DIR/$2 > /dev/null
 
 if [ $? -eq 0 ]
