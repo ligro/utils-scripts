@@ -9,7 +9,7 @@ usage () {
     exit 2
 }
 
-dir () {
+die () {
     echo "Error: $1"
     exit 1
 }
