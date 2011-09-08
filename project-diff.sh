@@ -37,12 +37,20 @@ if [ $# -eq 1 ]; then
 else
     FILE=$2
 fi
-diff $FILE $DIR/$FILE > /dev/null
 
-if [ $? -eq 0 ]
-then
-    echo 'No diff'
+if [ ! -d $FILE ]; then
+    diff -b $FILE $DIR/$FILE > /dev/null
+
+    if [ $? -ne 0 ]
+    then
+        $DIFF_EDITOR $FILE $DIR/$FILE
+    fi
+
 else
-    echo "$DIFF_EDITOR $FILE $DIR/$FILE"
-    $DIFF_EDITOR $FILE $DIR/$FILE
+
+    for F in $(ls $FILE)
+    do
+        $0 $DIR $FILE/$F
+    done
+
 fi

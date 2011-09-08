@@ -42,7 +42,7 @@ DIFF=project-diff.sh
 # modified file
 for FILE in $(svn st | grep "^M"| cut -d ' ' -f 8)
 do
-    diff $FILE $DIR/$FILE > /dev/null
+    diff -b $FILE $DIR/$FILE > /dev/null
     RES=$?
     if [ $RES -ne 0 ]; then
         if [ $USE_DIFF -eq 1 ]; then
@@ -56,7 +56,7 @@ done
 # added file
 for FILE in $(svn st | grep "^A"| cut -d ' ' -f 7)
 do
-    diff $FILE $DIR/$FILE > /dev/null
+    diff -b $FILE $DIR/$FILE > /dev/null
     RES=$?
     if [ $RES -ne 0 ]; then
         echo "A $FILE"
