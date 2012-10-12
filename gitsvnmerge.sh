@@ -15,9 +15,9 @@ if [ $# -eq 0 ]; then
 fi
 
 
-for $REV in $@
+for REV in $@
 do
-    svnid=$(echo "$1" | tr -d r)
+    svnid=$(echo "$REV" | tr -d r)
     gitid=$(git --no-pager log --all --format="%H" --grep "@$svnid" | tail -n 1)
 
     if [ -z "$gitid" ]

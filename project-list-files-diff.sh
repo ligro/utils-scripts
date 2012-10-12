@@ -1,7 +1,5 @@
 #!/bin/bash
 
-DIR="$HOME/Projects/trunk"
-
 usage () {
     echo "Usage: $0 [directory|project] [-d]"
     exit 2
@@ -62,6 +60,16 @@ do
         echo "A $FILE"
     fi
 done
+
+for FILE in $(svn st | grep "^R"| cut -d ' ' -f 7)
+do
+    diff -b $FILE $DIR/$FILE > /dev/null
+    RES=$?
+    if [ $RES -ne 0 ]; then
+        echo "R $FILE"
+    fi
+done
+
 
 # deleted file
 for FILE in $(svn st | grep "^D"| cut -d ' ' -f 8)

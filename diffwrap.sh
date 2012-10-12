@@ -13,7 +13,9 @@ if [ "$DIFF" ]
 then
     $DIFF $LEFT $RIGHT
 else
-    mvim -df +'set syntax=php' $LEFT $RIGHT
+    colordiff -bu $LEFT $RIGHT
+    #gvim -df +'set syntax=php' $LEFT $RIGHT
+    #gvim -df $LEFT $RIGHT
 fi
 
 # Return an errorcode of 0 if no differences were detected, 1 if some were.
