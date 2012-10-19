@@ -7,7 +7,7 @@ usage()
 }
 
 DIR=.
-if [ -d "$1" ]; then 
+if [ -d "$1" ]; then
     DIR=$1
     shift;
 fi
@@ -23,19 +23,24 @@ main()
 {
     for D in $(ls --color=none -1 $1);
     do
-        if [ -d "$1/$D/.svn" ];
+        if [ -d "$1/$D" ];
         then
-           if [ "$CMD" ]; then 
-                echo "## $1/$D";
-                cd $1/$D
-                $CMD;
-                cd $OLDPWD
-            else
-                echo "$1/$D"
+            # SVN repos
+            if [ -d "$1/$D/.svn" ];
+            then
+               if [ "$CMD" ]; then
+                    echo "## $1/$D";
+                    cd $1/$D
+                    $CMD;
+                    cd $OLDPWD
+                else
+                    echo "$1/$D"
+                fi
+            # not a GIT repos (there is no SVN repos in a GIT one)
+            elif [ ! -d "$1/$D/.git" ];
+            then
+                main $1/$D
             fi
-        elif [ -d "$1/$D" ];
-        then
-            main $1/$D
         fi
     done
 }
