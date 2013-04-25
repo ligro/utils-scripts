@@ -2,4 +2,4 @@
 
 # delete from svn already removed file
 
-svn st | grep ^! | cut -d ' ' -f 7 | xargs svn del
+svn st | grep ^! | cut -d ' ' -f 8 | xargs svn del

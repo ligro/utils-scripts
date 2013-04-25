@@ -73,12 +73,12 @@ CONFLICT=`echo "$MERGE_MSG" | grep "conflict" | wc -l`
 debug "$CONFLICT conflicts founds"
 [ "$CONFLICT" -ne 0 ] && error_exit "There is conflict, you must handle it manually:" $'\n' "$MERGE_MSG"
 
-COMMIT_MSG=`echo $MERGE_MSG | grep -Eo "Merging[^\n]*r[0-9]+"`
+COMMIT_MSG=`echo $MERGE_MSG | grep -Eo "Merging[^\n]*r[0-9]+" | tr "\n" ' '`
 
 # launch the merge
 debug "svn merge $TRUNK"
 svn merge $TRUNK
-if [ $? -ne 0 ] 
+if [ $? -ne 0 ]
 then
     debug "svn revert . --depth infinity"
     svn revert . --depth infinity
@@ -87,7 +87,7 @@ fi
 
 # commit the merge
 debug "svn commit -m '$COMMIT_MSG'"
-svn commit -m "$COMMIT_MSG"
+svn commit -m \"$COMMIT_MSG\"
 [ $? -ne 0 ] && error_exit "svn commit -m '$COMMIT_MSG'"
 
 cd $OLDPWD
