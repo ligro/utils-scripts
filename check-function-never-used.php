@@ -1,9 +1,10 @@
 <?php
 
-$sourceDir = "/Users/ligro/Projects/trunk/inc";
-$grepDir = "/Users/ligro/Projects/trunk";
-$sFileFunction = "/Users/ligro/function";
-$sFileNotUsed = "/Users/ligro/function-not-used-trunk";
+$sourceDir = $_SERVER['PWD'];
+$grepDir = $_SERVER['PWD'];
+$sFileFunction = "function";
+$sFileNotUsed = "function-not-used";
+
 /*
  * first store all functions
  *
@@ -77,7 +78,7 @@ while ($sFunction = fgets($rFunctions))
 {
 	$aFunction = explode(":", $sFunction);
 	$sFunction = substr($aFunction[1], 0, strlen($aFunction[1]) - 1);
-	$sCmd = "project-grep.sh \"".$sFunction."(\" ".$grepDir." | grep -v function | wc -l";
+	$sCmd = "ack \"".$sFunction."\\(\" ".$grepDir." | grep -v function | wc -l";
 	echo $sCmd."\n";
 	if (exec($sCmd) == 0)
 	{
