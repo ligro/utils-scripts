@@ -15,12 +15,11 @@ then
 		echo "$2: no such directory"
 fi
 
-EXTS[0]="php"
-NB_EXTS=1
+#EXTS[0]="php"
+CPT=0;
 
 if [ $# -gt 2 ]
 then
-	CPT=0;
 	for EXT in $@
 	do
 		if [ $CPT -gt 1 ]
@@ -31,10 +30,15 @@ then
 	done
 fi
 
+if [ $CPT -eq 0 ]
+then
+	EXTS[0]="php"
+fi
+
 for EXT in ${EXTS[@]}
 do
 		echo "==== $EXT ===="
 		echo 'find '$2' -name "*.'$EXT'" -exec grep -n '$1' {} + | grep -v svn'
-		find $2 -name "*.$EXT" -exec grep -n "${1}" {} + | grep -v svn
+		find $2 -name "*.$EXT" -exec grep --color -n "${1}" {} + | grep -v svn
 done
 
